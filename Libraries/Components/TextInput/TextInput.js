@@ -439,6 +439,9 @@ const TextInput = createReactClass({
      * is not provided for performance reasons.
      */
     onScroll: PropTypes.func,
+
+    onShouldReturn: PropTypes.func,
+
     /**
      * The string that will be rendered before text input has been entered.
      */
@@ -777,6 +780,7 @@ const TextInput = createReactClass({
           text={this._getText()}
           dataDetectorTypes={this.props.dataDetectorTypes}
           onScroll={this._onScroll}
+          onShouldReturn={this._onShouldReturn}
         />
       );
     }
@@ -829,6 +833,7 @@ const TextInput = createReactClass({
         text={this._getText()}
         dataDetectorTypes={this.props.dataDetectorTypes}
         onScroll={this._onScroll}
+        onShouldReturn={this._onShouldReturn}
       />
     );
 
@@ -890,6 +895,7 @@ const TextInput = createReactClass({
         disableFullscreenUI={this.props.disableFullscreenUI}
         textBreakStrategy={this.props.textBreakStrategy}
         onScroll={this._onScroll}
+        onShouldReturn={this._onShouldReturn}
       />
     );
 
@@ -1013,6 +1019,11 @@ const TextInput = createReactClass({
 
   _onScroll: function(event: Event) {
     this.props.onScroll && this.props.onScroll(event);
+  },
+
+  _onShouldReturn: function(event: Event) {
+    const text = event.nativeEvent.text;
+    this.props.onShouldReturn && this.props.onShouldReturn(text);
   },
 });
 

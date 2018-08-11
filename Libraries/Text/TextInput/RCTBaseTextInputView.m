@@ -224,6 +224,11 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithFrame:(CGRect)frame)
 
 - (BOOL)textInputShouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+  if (_onShouldReturn && [text isEqualToString:@"\n"]) {
+    _onShouldReturn(@{@"text": self.attributedText.string});
+    return NO;
+  }
+
   id<RCTBackedTextInputViewProtocol> backedTextInputView = self.backedTextInputView;
 
   if (!backedTextInputView.textWasPasted) {

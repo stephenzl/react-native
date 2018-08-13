@@ -780,7 +780,7 @@ const TextInput = createReactClass({
           text={this._getText()}
           dataDetectorTypes={this.props.dataDetectorTypes}
           onScroll={this._onScroll}
-          onShouldReturn={this._onShouldReturn}
+          onShouldReturn={this.props.onShouldReturn}
         />
       );
     }
@@ -833,7 +833,7 @@ const TextInput = createReactClass({
         text={this._getText()}
         dataDetectorTypes={this.props.dataDetectorTypes}
         onScroll={this._onScroll}
-        onShouldReturn={this._onShouldReturn}
+        onShouldReturn={this.props.onShouldReturn}
       />
     );
 
@@ -895,7 +895,7 @@ const TextInput = createReactClass({
         disableFullscreenUI={this.props.disableFullscreenUI}
         textBreakStrategy={this.props.textBreakStrategy}
         onScroll={this._onScroll}
-        onShouldReturn={this._onShouldReturn}
+        onShouldReturn={this.props.onShouldReturn}
       />
     );
 
@@ -1019,12 +1019,7 @@ const TextInput = createReactClass({
 
   _onScroll: function(event: Event) {
     this.props.onScroll && this.props.onScroll(event);
-  },
-
-  _onShouldReturn: function(event: Event) {
-    const text = event.nativeEvent.text;
-    this.props.onShouldReturn && this.props.onShouldReturn(text);
-  },
+  }
 });
 
 const styles = StyleSheet.create({

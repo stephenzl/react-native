@@ -56,6 +56,15 @@ class Alert {
       AlertAndroid.alert(title, message, buttons, options);
     }
   }
+
+  static dismiss(
+    animated?: boolean,
+    completion?: Function
+  ): void {
+    if (Platform.OS === 'ios') {
+      AlertIOS.dismiss(animated, completion);
+    }
+  }
 }
 
 /**

@@ -167,6 +167,17 @@ class AlertIOS {
       cb && cb(value);
     });
   }
+
+  static dismiss(
+    animated?: boolean,
+    completion?: Function
+  ): void {
+    if (typeof completion !== "function") {
+      completion = ()=> {
+      }
+    }
+    RCTAlertManager.dismissAlertAnimated(animated || false, completion);
+  }
 }
 
 module.exports = AlertIOS;

@@ -180,4 +180,13 @@ RCT_EXPORT_METHOD(alertWithArgs:(NSDictionary *)args
   [presentingController presentViewController:alertController animated:YES completion:nil];
 }
 
+RCT_EXPORT_METHOD(dismissAlertAnimated:(BOOL)animated completion:(RCTResponseSenderBlock)completion)
+{
+  for (UIAlertController *alertController in _alertControllers) {
+    [alertController.presentingViewController dismissViewControllerAnimated:animated completion:^() {
+      completion(@[@0]);
+    }];
+  }
+}
+
 @end

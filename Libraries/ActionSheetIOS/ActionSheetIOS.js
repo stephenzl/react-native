@@ -107,6 +107,27 @@ const ActionSheetIOS = {
       successCallback,
     );
   },
+
+  /**
+   * Dismiss action sheet manual
+   */
+  dismissActionSheetAnimated(
+    animated: boolean,
+    completion: Function,
+  ) {
+    invariant(
+      typeof animated === 'boolean',
+      'Animated Must provide a valid boolean',
+    );
+    invariant(
+      typeof completion === 'function',
+      'Must provide a valid completion callback',
+    );
+    RCTActionSheetManager.dismissActionSheetAnimated(
+      animated,
+      completion
+    );
+  }
 };
 
 module.exports = ActionSheetIOS;

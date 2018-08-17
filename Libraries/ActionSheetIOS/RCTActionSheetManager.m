@@ -21,6 +21,7 @@
   // Use NSMapTable, as UIAlertViews do not implement <NSCopying>
   // which is required for NSDictionary keys
   NSMapTable *_callbacks;
+  UIViewController *_alertController;
 }
 
 RCT_EXPORT_MODULE()
@@ -51,6 +52,12 @@ RCT_EXPORT_MODULE()
 RCT_EXPORT_METHOD(showActionSheetWithOptions:(NSDictionary *)options
                   callback:(RCTResponseSenderBlock)callback)
 {
+  if (_alertController) {
+    RCTLogError(@"One alert controller is already displayed");
+    return;
+  };
+
+
   if (RCTRunningInAppExtension()) {
     RCTLogError(@"Unable to show action sheet from app extension");
     return;
@@ -115,6 +122,7 @@ RCT_EXPORT_METHOD(showActionSheetWithOptions:(NSDictionary *)options
   [controller presentViewController:alertController animated:YES completion:nil];
 
   alertController.view.tintColor = [RCTConvert UIColor:options[@"tintColor"]];
+  _alertController = alertController;
 }
 
 RCT_EXPORT_METHOD(showShareActionSheetWithOptions:(NSDictionary *)options
@@ -184,6 +192,15 @@ RCT_EXPORT_METHOD(showShareActionSheetWithOptions:(NSDictionary *)options
   [controller presentViewController:shareController animated:YES completion:nil];
 
   shareController.view.tintColor = [RCTConvert UIColor:options[@"tintColor"]];
+  _alertController = shareController;
+}
+
+RCT_EXPORT_METHOD(dismissActionSheetAnimated:(BOOL)animated completion:(RCTResponseSenderBlock)completion)
+{
+  [_alertController dismissViewControllerAnimated:animated completion:^() {
+    _alertController = nil;
+    completion(@[@0]);
+  }];
 }
 
 #pragma mark UIActionSheetDelegate Methods
@@ -197,6 +214,11 @@ RCT_EXPORT_METHOD(showShareActionSheetWithOptions:(NSDictionary *)options
   } else {
     RCTLogWarn(@"No callback registered for action sheet: %@", actionSheet.title);
   }
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+  _alertController = nil;
 }
 
 @end

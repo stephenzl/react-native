@@ -107,6 +107,7 @@ RCT_EXPORT_METHOD(showActionSheetWithOptions:(NSDictionary *)options
     [alertController addAction:[UIAlertAction actionWithTitle:option
                                                         style:style
                                                       handler:^(__unused UIAlertAction *action){
+      _alertController = nil;
       callback(@[@(localIndex)]);
     }]];
 
@@ -174,6 +175,7 @@ RCT_EXPORT_METHOD(showShareActionSheetWithOptions:(NSDictionary *)options
 
   UIViewController *controller = RCTPresentedViewController();
   shareController.completionWithItemsHandler = ^(NSString *activityType, BOOL completed, __unused NSArray *returnedItems, NSError *activityError) {
+    _alertController = nil;
     if (activityError) {
       failureCallback(activityError);
     } else {
@@ -207,6 +209,7 @@ RCT_EXPORT_METHOD(dismissActionSheetAnimated:(BOOL)animated completion:(RCTRespo
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+  _alertController = nil;
   RCTResponseSenderBlock callback = [_callbacks objectForKey:actionSheet];
   if (callback) {
     callback(@[@(buttonIndex)]);

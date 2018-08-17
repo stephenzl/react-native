@@ -62,7 +62,7 @@ class Alert {
     completion?: Function
   ): void {
     if (Platform.OS === 'ios') {
-      AlertIOS.dismiss(animated, completion);
+      AlertIOS.dismiss && AlertIOS.dismiss(animated, completion);
     }
   }
 }

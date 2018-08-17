@@ -176,7 +176,7 @@ class AlertIOS {
       completion = ()=> {
       }
     }
-    RCTAlertManager.dismissAlertAnimated(animated || false, completion);
+    RCTAlertManager.dismissAlertAnimated && RCTAlertManager.dismissAlertAnimated(animated || false, completion);
   }
 }
 

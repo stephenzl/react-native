@@ -14,10 +14,14 @@
 #if !TARGET_OS_TV
 @implementation RCTConvert (UIStatusBar)
 
+#ifndef __IPHONE_13_0
+#define UIStatusBarStyleDarkContent UIStatusBarStyleDefault
+#endif
+  
 RCT_ENUM_CONVERTER(UIStatusBarStyle, (@{
   @"default": @(UIStatusBarStyleDefault),
   @"light-content": @(UIStatusBarStyleLightContent),
-  @"dark-content": @(@available(iOS 13, *) ? UIStatusBarStyleDarkContent : UIStatusBarStyleDefault),
+  @"dark-content": @(UIStatusBarStyleDarkContent)
 }), UIStatusBarStyleDefault, integerValue);
 
 RCT_ENUM_CONVERTER(UIStatusBarAnimation, (@{
